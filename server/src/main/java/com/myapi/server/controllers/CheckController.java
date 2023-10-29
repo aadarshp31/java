@@ -10,9 +10,8 @@ import com.myapi.server.models.CommonRes;
 @RequestMapping("/api")
 public class CheckController {
   
-  @GetMapping("/")
+  @GetMapping({"", "/"})  // This allows both /api and /api/ to map to the status method
   public CommonRes status(){ 
-    System.out.println("Hu");
     return new CommonRes(CommonRes.EStatus.success, "Server is running!");
   }
 }

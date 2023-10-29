@@ -2,16 +2,16 @@ package com.myapi.server.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.myapi.server.models.Film;
 import com.myapi.server.repositories.FilmRepository;
 
-
+@Service
 public class FilmService {
+  @Autowired
   private FilmRepository filmRepository;
-
-  public FilmService(FilmRepository filmRepository) {
-    this.filmRepository = filmRepository;
-  }
 
   public List<Film> getAllFilms(){
     return this.filmRepository.findAll();

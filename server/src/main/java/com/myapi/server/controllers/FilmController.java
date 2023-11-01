@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myapi.server.models.CommonRes;
 import com.myapi.server.models.Film;
 import com.myapi.server.services.FilmService;
 
@@ -38,21 +37,21 @@ public class FilmController {
       List<Film> filmArray = new ArrayList<Film>();
       filmArray.add(optionalFilm.get());
       resBody.put("films", filmArray);
-      resBody.put("status", CommonRes.EStatus.success);
+      resBody.put("status", "success");
       resBody.put("message", String.format("Successfully found the film with id: %s", id));
       return new ResponseEntity<Object>(resBody, HttpStatus.OK);
 
     } catch (NoSuchElementException e) {
-      resBody.put("status", CommonRes.EStatus.failure);
+      resBody.put("status", "failure");
       resBody.put("message", String.format("The film with id: %s does not exists", id));
       return new ResponseEntity<Object>(resBody, HttpStatus.NOT_FOUND);
 
     } catch (Exception e) {
-      resBody.put("status", CommonRes.EStatus.failure);
+      resBody.put("status", "failure");
       resBody.put("message", String.format("Something went wrobg."));
       resBody.put("error", e.getMessage());
       return new ResponseEntity<Object>(resBody, HttpStatus.INTERNAL_SERVER_ERROR);
-
+      
     }
   }
 }

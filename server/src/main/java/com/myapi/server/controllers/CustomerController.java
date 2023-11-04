@@ -42,20 +42,20 @@ public class CustomerController {
   }
 
   @GetMapping({ "/{id}", "/{id}/" })
-  public ResponseEntity<Object> getFilmById(@PathVariable Long id) {
+  public ResponseEntity<Object> getCustomerById(@PathVariable Long id) {
     Map<String, Object> resBody = new HashMap<String, Object>();
     try {
-      Optional<Customer> optionalFilm = this.customerService.getCustomerById(id);
+      Optional<Customer> optionalCustomer = this.customerService.getCustomerById(id);
       List<Customer> customers = new ArrayList<Customer>();
-      customers.add(optionalFilm.get());
+      customers.add(optionalCustomer.get());
       resBody.put("customers", customers);
       resBody.put("status", "success");
-      resBody.put("message", String.format("Successfully found the film with id: %s", id));
+      resBody.put("message", String.format("Successfully found the customer with id: %s", id));
       return new ResponseEntity<Object>(resBody, HttpStatus.OK);
 
     } catch (NoSuchElementException e) {
       resBody.put("status", "failure");
-      resBody.put("message", String.format("The film with id: %s does not exists", id));
+      resBody.put("message", String.format("The customer with id: %s does not exists", id));
       return new ResponseEntity<Object>(resBody, HttpStatus.NOT_FOUND);
 
     } catch (Exception e) {

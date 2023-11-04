@@ -25,8 +25,20 @@ public class FilmController {
   private FilmService filmService;
 
   @GetMapping
-  public List<Film> getAllFilms() {
-    return this.filmService.getAllFilms();
+  public ResponseEntity<Object> getAllFilms() {
+    Map<String, Object> resBody = new HashMap<String, Object>();
+    try {
+      List<Film> filmArray = this.filmService.getAllFilms();
+      resBody.put("films", filmArray);
+      resBody.put("status", "success");
+      resBody.put("message", String.format("Successfully found the films"));
+      return new ResponseEntity<Object>(resBody, HttpStatus.OK);
+
+    } catch (Exception e) {
+      resBody.put("status", "failure");
+      resBody.put("message", String.format("Something went wrong while finding films.\n%s", e.getMessage()));
+      return new ResponseEntity<Object>(resBody, HttpStatus.NOT_FOUND);
+    }
   }
 
   @GetMapping({ "/{id}", "/{id}/" })
@@ -51,7 +63,7 @@ public class FilmController {
       resBody.put("message", String.format("Something went wrobg."));
       resBody.put("error", e.getMessage());
       return new ResponseEntity<Object>(resBody, HttpStatus.INTERNAL_SERVER_ERROR);
-      
+
     }
   }
 }

@@ -26,6 +26,10 @@ public class JwtService {
     return extractClaim(token, Claims::getSubject);
   }
 
+  private Date extractExpiration(String token) {
+    return extractClaim(token, Claims::getExpiration);
+  }
+
   private SecretKey getSecretKey() {
     byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
     return Keys.hmacShaKeyFor(keyBytes);
@@ -69,4 +73,14 @@ public class JwtService {
         .signWith(getSecretKey(), SIG.HS256)
         .compact();
   }
+
+  public boolean isTokenValid(String token, UserDetails userDetails) {
+    String username = extractUsername(token);
+    return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+  }
+
+  private boolean isTokenExpired(String token) {
+    return extractExpiration(token).before(new Date());
+  }
+
 }

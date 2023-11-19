@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "MY_CONFIG.SECRET_KEY",
+      "type": "java.lang.String",
+      "description": "Secret key for signing JWT tokens"
+    }
+  ]
+}

@@ -22,3 +22,6 @@ spring:
     properties:
       format-sql: true
 
+# My Configs
+MY_CONFIG:
+  SECRET_KEY: ${SECRET_KEY}

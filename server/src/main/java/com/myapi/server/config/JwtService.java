@@ -1,14 +1,18 @@
 package com.myapi.server.config;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.Jwts.SIG;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
@@ -49,5 +53,20 @@ public class JwtService {
         .build()
         .parseSignedClaims(token)
         .getPayload();
+  }
+
+  public String generateToken(UserDetails userDetails) {
+    return generateToken(userDetails, new HashMap<>());
+  }
+
+  public String generateToken(UserDetails userDetails, HashMap<String, Object> extraClaims) {
+    return Jwts
+        .builder()
+        .claims(extraClaims)
+        .subject(userDetails.getUsername())
+        .issuedAt(new Date(System.currentTimeMillis()))
+        .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 1)) // 1 hour expiration
+        .signWith(getSecretKey(), SIG.HS256)
+        .compact();
   }
 }

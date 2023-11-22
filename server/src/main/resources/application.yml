@@ -3,25 +3,25 @@ server:
 
 spring:
   devtools:
-    restart: 
+    restart:
       enabled: true
       exclude: static/**,public
     livereload:
       enabled: true
 
-  datasource: 
+  datasource:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: ${DRIVER}
     url: ${DB_URL}
 
-  jpa: 
+  jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       format-sql: true
 
 # My Configs
-MY_CONFIG:
-  SECRET_KEY: ${SECRET_KEY}
+myapi:
+  secret-key: ${SECRET_KEY}

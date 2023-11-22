@@ -17,18 +17,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_user")
+@Table(name = "\"user\"") // Quote the table name
 public class User implements UserDetails {
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
+  @Id
+  @GeneratedValue
+  private Long id;
+  private String firstname;
+  private String lastname;
+  private String email;
+  private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+  @Enumerated(EnumType.STRING)
+  private Role role;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -39,6 +39,7 @@ public class User implements UserDetails {
   public String getUsername() {
     return email;
   }
+
   @Override
   public String getPassword() {
     return password;

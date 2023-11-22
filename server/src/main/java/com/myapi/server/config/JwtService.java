@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,10 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service
-@ConfigurationProperties("MY_CONFIG")
 public class JwtService {
 
-  private static String SECRET_KEY;
+  @Value("${myapi.secret-key}")
+  private String SECRET_KEY;
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
@@ -69,7 +69,7 @@ public class JwtService {
         .claims(extraClaims)
         .subject(userDetails.getUsername())
         .issuedAt(new Date(System.currentTimeMillis()))
-        .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 1)) // 1 hour expiration
+        .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour expiration
         .signWith(getSecretKey(), SIG.HS256)
         .compact();
   }

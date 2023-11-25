@@ -3,4 +3,3 @@ This repository contains code related to my learning and understanding of topics
 
 ### Authors
 Adarsh Pandey (aadarshp31)
-Aniket Soni (aniket.sonii)

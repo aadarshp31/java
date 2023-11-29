@@ -11,6 +11,7 @@ import com.myapi.server.config.JwtService;
 import com.myapi.server.models.Role;
 import com.myapi.server.models.User;
 import com.myapi.server.repositories.UserRepository;
+import com.myapi.server.utils.CookieUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.var;
@@ -23,6 +24,7 @@ public class AuthenticationService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
   private final UserDetailsService userDetailsService;
+  private final CookieUtils cookieUtils;
 
   public AuthenticationResponse register(RegisterRequest reqBody) {
     var user = User.builder()
@@ -50,6 +52,9 @@ public class AuthenticationService {
 
     UserDetails user = userDetailsService.loadUserByUsername(reqBody.getEmail());
     String jwtToken = jwtService.generateToken(user);
+
+    // set jwtToken to cookie
+    cookieUtils.setCookieValue("token", jwtToken);
 
     return AuthenticationResponse.builder()
         .token(jwtToken)

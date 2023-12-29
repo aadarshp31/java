@@ -14,7 +14,6 @@ import com.myapi.server.repositories.UserRepository;
 import com.myapi.server.utils.CookieUtils;
 
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 
 @Service
 @RequiredArgsConstructor
